@@ -89,7 +89,7 @@
                             Swal.fire({
                                 position: 'center',
                                 icon: 'success',
-                                title: 'Contact Has Been Added',
+                                title: 'Done',
                                 showConfirmButton: false,
                                 timer: 1500
                             });
