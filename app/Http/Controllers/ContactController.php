@@ -48,7 +48,12 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data= [
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
+        ];
+        return Contact::create($data);
     }
 
     /**

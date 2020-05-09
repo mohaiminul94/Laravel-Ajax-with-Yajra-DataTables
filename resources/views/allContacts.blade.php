@@ -16,6 +16,7 @@
     
 
     <div class="container" style="margin-top:50px;">
+        <a onclick="addContact()" class="btn btn-success" style="float: right; margin:15px;">Add Contact</a>
         <table id="allContacts" class="table table-striped">
             <thead>
                 <tr>
@@ -28,20 +29,23 @@
             </thead>
             <tbody>
             </tbody>
-        </table>        
+        </table>  
+        @include('form')   
     </div>
 
 
     <!-- Optional JavaScript -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+    <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script> -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="{{ asset('assets/validator/validator.min.js') }}"></script>
     
     <script>
+        // read all contact with yajra
         var allContacts = $('#allContacts').DataTable({
             processing: true,
             serverSide: true,
@@ -54,6 +58,55 @@
                 {data:'action', name:'action', orderable: false, searchable: false}
             ]
         });
+
+        // display modal form
+        function addContact() {
+            save_method= 'add';
+            $('input[name=_method]').val('POST');
+            $('#showModal').modal('show');
+            $('#showModal form')[0].reset();
+            $('#modalTitle').text('Add New Contact');
+            $('#modalSubmit').text('Save');
+        }
+
+        // insert contact
+        $(function(){
+            $('#showModal form').validator().on('submit', function (e) {
+                if (!e.isDefaultPrevented()){
+                    var id = $('#id').val();
+                    if (save_method == 'add') url = "{{ url('contacts') }}";
+                    else url = "{{ url('contacts') . '/' }}" + id;
+                    $.ajax({
+                        url : url,
+                        type : "POST",
+                        data: new FormData($("#showModal form")[0]),
+                        contentType: false,
+                        processData: false,
+                        success : function(data) {
+                            $('#showModal').modal('hide');
+                            allContacts.ajax.reload();
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'success',
+                                title: 'Contact Has Been Added',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        },
+                        error : function(data){
+                            swal({
+                                title: 'Oops...',
+                                text: data.message,
+                                type: 'error',
+                                timer: '1500'
+                            })
+                        }
+                    });
+                    return false;
+                }
+            });
+        });
+
     </script>
 
   </body>
