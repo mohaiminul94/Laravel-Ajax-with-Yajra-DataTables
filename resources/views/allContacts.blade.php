@@ -132,6 +132,48 @@
           });
         }
 
+        // delete single data
+        //delete ajax request are here
+      function deleteData(id){
+          var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+          swal.fire({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this contact!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              $.ajax({
+                  url : "{{ url('contacts') }}" + '/' + id,
+                  type : "POST",
+                  data : {'_method' : 'DELETE', '_token' : csrf_token},
+                  success : function(data) {
+                      allContacts.ajax.reload();
+                      swal.fire({
+                        title: "Done!",
+                        text: "Contact Deleted!",
+                        icon: "success",
+                        button: "Close!",
+                      });
+                  },
+                  error : function () {
+                      swal.fire({
+                          title: 'Oops...',
+                          text: data.message,
+                          type: 'error',
+                          timer: '1500'
+                      })
+                  }
+              });
+            } else {
+              swal("Your contact is safe!");
+            }
+          });
+        }
+
     </script>
 
   </body>
