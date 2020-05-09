@@ -25,8 +25,8 @@ class ContactController extends Controller
         return Datatables::of($contacts)
             ->addColumn('action', function($contacts) {
                 return '<a onclick="showData('.$contacts->id.')" class="btn btn-success">Show</a>'.' '.
-                       '<a onclick="editData('.$contacts->id.')" class="btn btn-primary">Show</a>'.' '.
-                       '<a onclick="deleteData('.$contacts->id.')" class="btn btn-danger">Show</a>';
+                       '<a onclick="editData('.$contacts->id.')" class="btn btn-primary">Edit</a>'.' '.
+                       '<a onclick="deleteData('.$contacts->id.')" class="btn btn-danger">Delete</a>';
             })->make(true); 
     }
 
@@ -75,7 +75,8 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contact= Contact::find($id);
+        return $contact;
     }
 
     /**
@@ -87,7 +88,12 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contact= Contact::find($id);
+        $contact->name= $request['name'];
+        $contact->phone= $request['phone'];
+        $contact->email= $request['email'];
+        $contact->update();
+        return $contact;
     }
 
     /**

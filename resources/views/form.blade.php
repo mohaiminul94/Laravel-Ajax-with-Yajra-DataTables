@@ -19,16 +19,17 @@
         @method('POST')
         <div class="form-group">
             <label for="exampleInputEmail1">Name</label>
-            <input required name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input required name="name" id="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Phone</label>
-            <input required name="phone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input required name="phone" id="phone" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1">Email</label>
-            <input required name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input required name="email" id="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         </div>
+        <input type="hidden" name="id" id="id">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

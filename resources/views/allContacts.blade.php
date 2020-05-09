@@ -70,9 +70,10 @@
         }
 
         // insert contact
-        $(function(){
+        $(function() {
             $('#showModal form').validator().on('submit', function (e) {
                 if (!e.isDefaultPrevented()){
+                    // var 
                     var id = $('#id').val();
                     if (save_method == 'add') url = "{{ url('contacts') }}";
                     else url = "{{ url('contacts') . '/' }}" + id;
@@ -91,10 +92,10 @@
                                 title: 'Contact Has Been Added',
                                 showConfirmButton: false,
                                 timer: 1500
-                            })
+                            });
                         },
                         error : function(data){
-                            swal({
+                            swal.fire({
                                 title: 'Oops...',
                                 text: data.message,
                                 type: 'error',
@@ -106,6 +107,30 @@
                 }
             });
         });
+
+        // edit single contact details
+       function editData(id) {
+          save_method = 'edit';
+          $('input[name=_method]').val('PATCH');
+          $('#showModal form')[0].reset();
+          $.ajax({
+              url: "{{ url('contacts') }}" + '/' + id + "/edit",
+              type: "GET",
+              dataType: "JSON",
+             success: function(data) {
+                $('#showModal').modal('show');
+                $('#modalTitle').text('Edit Contact Details');
+                $('#modalSubmit').text('Save Changes');
+                $('#id').val(data.id);
+                $('#name').val(data.name);
+                $('#phone').val(data.phone);
+                $('#email').val(data.email);
+            },
+            error : function() {
+                alert("Data Not Found");
+            }
+          });
+        }
 
     </script>
 
