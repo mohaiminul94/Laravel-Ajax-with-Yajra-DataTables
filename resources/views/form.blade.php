@@ -39,3 +39,24 @@
     </div>
   </div>
 </div>
+
+
+<!--single user details view-->
+<div class="modal fade" id="singleData" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      	<h4 class="modal-title" id="myModalLabel" align="center"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+ 
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+		  <li class="list-group-item">ID: <span class="text-danger" id="contactId"></span></li>
+		  <li class="list-group-item">Name: <span class="text-danger" id="contactName"></span> </li>
+		  <li class="list-group-item">Email: <span class="text-danger" id="contactPhone"></span></li>
+		  <li class="list-group-item">Phone: <span class="text-danger" id="contactEmail"></span></li>
+		</ul>
+    </div>
+  </div>
+</div>

@@ -132,9 +132,8 @@
           });
         }
 
-        // delete single data
-        //delete ajax request are here
-      function deleteData(id){
+      // delete single data
+      function deleteData(id) {
           var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
           swal.fire({
@@ -170,6 +169,26 @@
               });
             } else {
               swal("Your contact is safe!");
+            }
+          });
+        }
+
+        // display single user details
+        function showData(id) {
+          $.ajax({
+              url: "{{ url('contacts') }}" + '/' + id,
+              type: "GET",
+              dataType: "JSON",
+            success: function(data) {
+              $('#singleData').modal('show');
+              $('.modal-title').text(data.name +' '+'Informations');
+              $('#contactId').text(data.id); 
+              $('#contactName').text(data.name);
+              $('#contactPhone').text(data.phone);
+              $('#contactEmail').text(data.email);
+            },
+            error : function() {
+                alert("Data Not Found");
             }
           });
         }
